@@ -14,11 +14,17 @@ class SpecFiddler(ComponentTemplate):
     class Meta:
         component_cls = dbc.Container
 
-    def __init__(self, title_text="Spec Fiddler", subtitle_text="v0.1", **kwargs):
+    def __init__(
+        self,
+        title_text="Spec Fiddler",
+        subtitle_text="v0.1",
+        data_dir=None,
+        **kwargs):
         kwargs.setdefault("fluid", True)
         super().__init__(**kwargs)
         self._title_text = title_text
         self._subtitle_text = subtitle_text
+        self._data_dir = data_dir
         self.fluid = True
 
     def setup_layout(self, app):
@@ -34,8 +40,8 @@ class SpecFiddler(ComponentTemplate):
                 html.P(self._subtitle_text, className="text-secondary mx-2")
             )
         controls_panel, views_panel = body.grid(2, 1)
-        # pull down to select apt file
-        apt_select = controls_panel.child(
+
+        spec_file_select = controls_panel.child(
             LabeledDropdown(
                 label_text="Spectra file",
                 # className='w-auto',
@@ -44,12 +50,12 @@ class SpecFiddler(ComponentTemplate):
                 className="mb-2",
             )
         ).dropdown
-        surface_plot = views_panel.child(SurfacePlot())
+"""         surface_plot = views_panel.child(SurfacePlot())
         btn = controls_panel.child(dbc.Button, "Click Me")
 
         surface_plot_anim = views_panel.child(SurfacePlot())
         btn_anim = controls_panel.child(dbc.Button, "Click Me Animation")
-
+ """
         super().setup_layout(app)
 
         @app.callback(
